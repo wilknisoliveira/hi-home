@@ -1,3 +1,9 @@
+let map
+let lastMarker
+
+const markerBtn = document.querySelector('#marker');
+
+
 (async ()=>{
     const googleKey = await getGoogleKey();
 
@@ -10,8 +16,6 @@
     initMap()
 })()
 
-let map
-
 async function initMap(){
     const position = {
         lat: -25.344,
@@ -19,7 +23,6 @@ async function initMap(){
     }
 
     const { Map } = await google.maps.importLibrary("maps")
-    const { AdvancedMarkerView } = await google.maps.importLibrary("marker")
 
     map = new Map(document.getElementById("map"), {
         zoom: 4,
@@ -27,10 +30,9 @@ async function initMap(){
         mapId: "DEMO_MAP_ID"
     })
 
-    const marker = new AdvancedMarkerView({
-        map: map,
-        position: position,
-        title: "uluru"
+    map.addListener('click', function(e){
+        const clickPosition = e.latLng
+        markerMarked(clickPosition)
     })
 }
 
@@ -43,6 +45,24 @@ async function getGoogleKey(){
 
     return data.key
 }
+
+async function markerMarked(position){
+    if(lastMarker != null){
+        lastMarker.setMap(null)
+    }
+
+    const { AdvancedMarkerView } = await google.maps.importLibrary("marker")
+
+    const marker = new AdvancedMarkerView({
+        map: map,
+        position: position,
+        title: "uiui"
+    })
+
+    lastMarker = marker
+}
+
+
 
 
 
