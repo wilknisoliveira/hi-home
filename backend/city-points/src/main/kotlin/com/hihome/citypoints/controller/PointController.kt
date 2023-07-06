@@ -2,6 +2,10 @@ package com.hihome.citypoints.controller
 
 import com.hihome.citypoints.model.Point
 import com.hihome.citypoints.services.PointService
+
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -12,12 +16,14 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.logging.Logger
 
 @RestController
 @RequestMapping("/points")
 class PointController {
     @Autowired
     private lateinit var pointService: PointService
+    private val logger = Logger.getLogger(PointService::class.java.name)
 
     @PostMapping
     fun create(@RequestBody point: Point): Point{
@@ -26,21 +32,36 @@ class PointController {
 
     @GetMapping
     fun readAll(): List<Point>{
-        return pointService.findAll()
+        val points = pointService.findAll()
+
+        for(point in points){
+            val id = point.id
+            //I passed just the slash because the methodOn didn't work here.
+            point.add(linkTo(PointController::class.java).slash(id).withSelfRel())
+        }
+        return points
     }
 
     @GetMapping(value = ["/{id}"])
     fun readById(@PathVariable(value = "id") id: Long): Point{
-        return pointService.findById(id)
+        val point = pointService.findById(id)
+        point.add(linkTo(methodOn(PointController::class.java).readAll()).withRel("Points list"))
+        return point
     }
 
     @PutMapping
     fun update(@RequestBody point: Point): Point{
-        return pointService.update(point)
+        val pt = pointService.update(point)
+        logger.info("1")
+        val met = methodOn(PointController::class.java).readById(point.id)
+        logger.info("2")
+        pt.add(linkTo(met).withRel("Any"))
+        return pt
+        //return pointService.update(point)
     }
 
     @DeleteMapping(value = ["/{id}"])
-    fun update(@PathVariable(value = "id") id: Long): ResponseEntity<*>{
+    fun delete(@PathVariable(value = "id") id: Long): ResponseEntity<*>{
         pointService.delete(id)
 
         //I used noContent here to define the 204 status

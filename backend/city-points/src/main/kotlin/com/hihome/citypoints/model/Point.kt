@@ -1,6 +1,7 @@
 package com.hihome.citypoints.model
 
 import jakarta.persistence.*
+import org.springframework.hateoas.RepresentationModel
 
 @Entity
 @Table(name="point")
@@ -17,4 +18,4 @@ class Point (
 
     @Column(nullable = false, length = 20)
     var lng: String = "",
-)
+): RepresentationModel<Point>()
