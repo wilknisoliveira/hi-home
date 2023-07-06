@@ -36,8 +36,7 @@ class PointController {
 
         for(point in points){
             val id = point.id
-            //I passed just the slash because the methodOn didn't work here.
-            point.add(linkTo(PointController::class.java).slash(id).withSelfRel())
+            point.add(linkTo(methodOn(PointController::class.java).readById(id)).withSelfRel())
         }
         return points
     }
@@ -46,18 +45,13 @@ class PointController {
     fun readById(@PathVariable(value = "id") id: Long): Point{
         val point = pointService.findById(id)
         point.add(linkTo(methodOn(PointController::class.java).readAll()).withRel("Points list"))
+        point.add(linkTo(PointController::class.java).slash(id).withSelfRel())
         return point
     }
 
     @PutMapping
     fun update(@RequestBody point: Point): Point{
-        val pt = pointService.update(point)
-        logger.info("1")
-        val met = methodOn(PointController::class.java).readById(point.id)
-        logger.info("2")
-        pt.add(linkTo(met).withRel("Any"))
-        return pt
-        //return pointService.update(point)
+        return pointService.update(point)
     }
 
     @DeleteMapping(value = ["/{id}"])

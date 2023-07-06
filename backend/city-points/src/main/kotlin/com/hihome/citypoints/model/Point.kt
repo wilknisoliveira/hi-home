@@ -5,7 +5,7 @@ import org.springframework.hateoas.RepresentationModel
 
 @Entity
 @Table(name="point")
-class Point (
+open class Point (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
