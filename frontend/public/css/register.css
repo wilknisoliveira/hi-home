@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, main, body {
+    width: 100%;
+    height: 100%;
+    background-color: #ecf0f1;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+div#container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 2%;
+}
+
+div#map {
+    height: 100%;
+    width: 30%;
+    border-radius:10px 0px 0px 10px;
+}
+
+div#register {
+    height: 100%;
+    width: 40%;
+    border-radius:0px 10px 10px 0px;
+    background-color: white;
+}
+
+div#register-content {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+h2#register-title {
+    font-size: x-large;
+    margin-bottom: 8%;
+    color: #58af9c;
+    font-weight: bolder;
+}
+
+input {
+    margin-bottom: 5%;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 20px;
+    border-width: 1px;
+}
+
+input#name {
+    padding-left: 8px;
+    width: 98%;
+}
+
+input#save-btn {
+    font-size: medium;
+    color: white;
+    font-weight: bold;
+    background-color: #58af9c;
+    border-width: 0;
+    cursor: pointer;
+}
+
+div#orientation {
+    font-size: smaller;
+    margin-bottom: 8%;
+    color: #58af9c;
+    font-weight:lighter;
+}

@@ -1,8 +1,9 @@
 let map
 let lastMarker
 
-const markerBtn = document.querySelector('#marker');
+const saveBtn = document.querySelector('input#save-btn')
 
+saveBtn.addEventListener('click', save);
 
 (async ()=>{
     const googleKey = await getGoogleKey();
@@ -24,7 +25,7 @@ async function initMap(){
 
     const { Map } = await google.maps.importLibrary("maps")
 
-    map = new Map(document.getElementById("map"), {
+    map = new Map(document.querySelector('#map'), {
         zoom: 4,
         center: position,
         mapId: "DEMO_MAP_ID"
@@ -56,12 +57,15 @@ async function markerMarked(position){
     const marker = new AdvancedMarkerView({
         map: map,
         position: position,
-        title: "uiui"
+        title: "mock"
     })
 
     lastMarker = marker
 }
 
+function save(){
+    console.log('save test')
+}
 
 
 
