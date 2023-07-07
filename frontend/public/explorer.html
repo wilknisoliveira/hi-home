@@ -3,38 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
-    <link rel="stylesheet" type="text/css" href="./css/register.css" />
+    <title>Explorer</title>
+    <link rel="stylesheet" type="text/css" href="./css/explorer.css"/>
     <link rel="stylesheet" type="text/css" href="./css/hihome.css" />
-    <script type="module" src="./js/register.js"></script>
 </head>
 <body>
+    <header>
+        <div id="hi-title">Hi</div>
+        <div>-Home</div>
+    </header>
+
     <main>
         <div id="container" class="container">
-            <div id="map"></div>
             <div id="register" class="register">
                 <div id="register-content">
-                    <h2 id="register-title">Register</h2>
-
-                    <div id="orientation">Insert the name of the Point and choose the position on the map on the left side</div>
+                    <h2 id="update-title">Update</h2>
 
                     <form>
                         <label for="name">Name</label><br>
                         <input type="text" id="name" name="name" class="input-form input-name" required><br>
-    
+
                         <input type="button" id="save-btn" class="standard-btn input-form" value="Save">
                     </form>
                 </div>
-                <div id="div-explorer-btn">
-                    <input type="button" id="explorer-btn" class="standard-btn" value="Explorer">
-                </div>
             </div>
+            <div id="map">Map</div>
+        </div>
+        <div id="explorer">
+            Explorer
         </div>
     </main>
     
-
 </body>
 </html>

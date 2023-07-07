@@ -4,8 +4,10 @@ const apiPointUrl = 'http://localhost:8080/points'
 
 const saveBtn = document.querySelector('input#save-btn')
 const nameInput = document.querySelector('input#name')
+const explorerBtn = document.querySelector('input#explorer-btn')
 
-saveBtn.addEventListener('click', save);
+saveBtn.addEventListener('click', save)
+explorerBtn.addEventListener('click', explorerPage);
 
 (async ()=>{
     const googleKey = await getGoogleKey();
@@ -88,6 +90,10 @@ async function create(point){
         }
     })
     const dataResponse = await response.json()
+}
+
+function explorerPage(){
+    window.location.href = "http://localhost:3000/explorer"
 }
 
 

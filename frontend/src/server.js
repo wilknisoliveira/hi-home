@@ -11,6 +11,10 @@ app.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname, '../public', 'register.html'))
 })
 
+app.get('/explorer', (req, res)=>{
+    res.sendFile(path.join(path.join(__dirname, '../public', 'explorer.html')))
+})
+
 app.get('/googlekey', (req, res)=>{
     const key = {"key": process.env.GOOGLE_API_KEY}
     

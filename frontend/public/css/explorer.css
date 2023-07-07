@@ -1,0 +1,33 @@
+body {
+    padding: 3%;
+}
+
+header {
+    display: flex;
+    font-size:x-large;
+    margin-bottom: 1%;
+}
+
+div#hi-title {
+    color: #58af9c;
+}
+
+div#map {
+    height: 100%;
+    width: 64%;
+    border-radius: 0px 10px 10px 0px;
+}
+
+div#register {
+    height: 100%;
+    width: 30%;
+    border-radius:10px 0px 0px 10px;
+}
+
+div#register-content {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
