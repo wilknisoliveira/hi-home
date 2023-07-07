@@ -1,7 +1,9 @@
 let map
 let lastMarker
+const apiPointUrl = 'http://localhost:8080/points'
 
 const saveBtn = document.querySelector('input#save-btn')
+const nameInput = document.querySelector('input#name')
 
 saveBtn.addEventListener('click', save);
 
@@ -64,7 +66,28 @@ async function markerMarked(position){
 }
 
 function save(){
-    console.log('save test')
+    let name = nameInput.value
+
+    if(name != "" && lastMarker != null){
+        let point = {
+            name: name,
+            lat: lastMarker.position.lat,
+            lng: lastMarker.position.lng
+        }
+        create(point)
+    }else
+        console.log('no')
+}
+
+async function create(point){
+    const response = await fetch(apiPointUrl, {
+        method: "POST",
+        body: JSON.stringify(point),
+        headers: {
+            "Content-type" : "application/json"
+        }
+    })
+    const dataResponse = await response.json()
 }
 
 
