@@ -39,3 +39,9 @@ input#explorer-btn {
     width: 15%;
     padding: 5px;
 }
+
+div#attention {
+    color: red;
+    display: None;
+    justify-content: center;
+}
