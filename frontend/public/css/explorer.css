@@ -1,15 +1,18 @@
 body {
-    padding: 3%;
+    padding: 1% 3% 3% 3%;
 }
 
 header {
     display: flex;
     font-size:x-large;
-    margin-bottom: 1%;
 }
 
 div#hi-title {
     color: #58af9c;
+}
+
+div#container {
+    height: 60%;
 }
 
 div#map {
@@ -58,8 +61,18 @@ input#delete-btn {
     background-color: red;
 }
 
+div#explorer-container {
+    position: relative;
+    width: 94%;
+}
+
+div#gallery-wrapper {
+    overflow-x: auto;
+}
+
 div#explorer {
     display: flex;
+    flex-flow: row nowrap;
 }
 
 .point-div {
@@ -69,5 +82,9 @@ div#explorer {
     border: 2px solid;
     border-radius: 20px 20px 20px 20px;
     border-color: #58af9c;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
