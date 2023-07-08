@@ -53,3 +53,8 @@ input#name {
     border-width: 1px;
 }
 
+.attention {
+    color: red;
+    display: None;
+    justify-content: center;
+}

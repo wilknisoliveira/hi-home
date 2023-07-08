@@ -1,11 +1,12 @@
 export class GoogleMaps {
     constructor(mapDiv) {
         this.mapDiv = mapDiv
+        this.map
+        this.currentMarker
+        this.lastMk
     }
 
-    async initWait(){
-        sessionStorage.clear()
-        
+    async initWait(){              
         const googleKey = await this.getGoogleKey();
     
         (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
@@ -13,8 +14,8 @@ export class GoogleMaps {
             // Add other bootstrap parameters as needed, using camel case.
             // Use the 'v' parameter to indicate the version to load (alpha, beta, weekly, etc.)
         })
-    
-        this.initMap()
+        
+        await this.initMap()
     }
     
     async initMap(){
@@ -31,8 +32,12 @@ export class GoogleMaps {
             mapId: "DEMO_MAP_ID"
         })
     
-        let marker
         map.addListener('click', async function(e){
+            try {
+                const changes = document.querySelector('div#changes')
+                changes.style.display = "flex"
+            }catch{}
+
             const clickPosition = e.latLng;
 
             if(this.lastMarker != null){
@@ -41,17 +46,18 @@ export class GoogleMaps {
         
             const { AdvancedMarkerView } = await google.maps.importLibrary("marker")
         
-            const nameInput = document.querySelector('input#name')
-            marker = new AdvancedMarkerView({
+            const marker = new AdvancedMarkerView({
                 map: map,
                 position: clickPosition,
-                title: nameInput.value
+                title: (Math.random() * (1000-0) + 0).toString()
             })
         
             this.lastMarker = marker
 
             sessionStorage.setItem("position", JSON.stringify(marker.position))
         })
+
+        this.map = map
     }
     
     async getGoogleKey(){
@@ -62,5 +68,21 @@ export class GoogleMaps {
         const data = await response.json()
     
         return data.key
+    }
+
+    async marker(){
+        const { AdvancedMarkerView } = await google.maps.importLibrary("marker")
+        
+        const nameInput = document.querySelector('input#name')
+        nameInput.value = JSON.parse(sessionStorage.getItem("currentPoint")).name
+        this.currentMarker = new AdvancedMarkerView({
+            map: this.map,
+            position: JSON.parse(sessionStorage.getItem("position")),
+            title: nameInput.value
+        })
+    }
+
+    deleteMarker(){
+        this.currentMarker.setMap(null)
     }
 }

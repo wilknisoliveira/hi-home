@@ -10,11 +10,13 @@ const attention = document.querySelector('div#attention')
 saveBtn.addEventListener('click', save)
 explorerBtn.addEventListener('click', explorerPage);
 
+sessionStorage.clear()
+
 const googleMaps = new GoogleMaps(document.querySelector('#map'))
 
 googleMaps.initWait()
 
-function save(){
+async function save(){
     let lastMarker = JSON.parse(sessionStorage.getItem("position"))
     let name = nameInput.value
 
@@ -24,7 +26,7 @@ function save(){
             lat: lastMarker.lat,
             lng: lastMarker.lng
         }
-        create(point)
+        await create(point)
         explorerPage()
     }else
         attention.style.display = "flex"
@@ -39,6 +41,7 @@ async function create(point){
         }
     })
     const dataResponse = await response.json()
+    await sessionStorage.setItem("currentPoint", JSON.stringify(dataResponse))
 }
 
 function explorerPage(){

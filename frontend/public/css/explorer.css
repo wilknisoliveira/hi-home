@@ -31,3 +31,30 @@ div#register-content {
     margin-bottom: 10%;
 }
 
+div#changes {
+    display: None;
+    color: yellow;
+    justify-content: end;
+    font-weight: bolder;
+}
+
+div#down-buttons {
+    display: flex;
+}
+
+.down-buttons {
+    width: 100%;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+div#right-button {
+    display: flex;
+    justify-content: end;
+}
+
+
+input#delete-btn {
+    background-color: red;
+}
+
