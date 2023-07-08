@@ -7,11 +7,14 @@ const changes = document.querySelector('div#map')
 const nameInput = document.querySelector('input#name')
 const attention = document.querySelector('div#attention')
 const showChanges = document.querySelector('div#changes')
-const deleteBtn = document.querySelector('div#delete-btn')
+const deleteBtn = document.querySelector('input#delete-btn')
+const newPointBtn = document.querySelector('input#new-point-btn')
 
 saveBtn.addEventListener('click', save)
 changes.addEventListener('click', deleteMarker)
 nameInput.addEventListener('change', upAvailable)
+deleteBtn.addEventListener('click', deletePoint)
+newPointBtn.addEventListener('click', newPoint)
 
 let updateAvailable = false
 
@@ -19,7 +22,9 @@ const googleMaps = new GoogleMaps(document.querySelector('div#map'));
 
 (async ()=>{
     await googleMaps.initWait()
-    googleMaps.marker()
+    if(sessionStorage.getItem("currentPoint") != null){
+        googleMaps.marker()
+    }
 })()
 
 function deleteMarker(){
@@ -48,7 +53,7 @@ function save(){
             update(point)
 
             attention.style.display = "None"
-            showChanges.innerHTML = ""
+            showChanges.style.display = "None"
         }else{
             attention.style.display = "flex"
         }
@@ -66,4 +71,16 @@ async function update(point){
     })
     const dataResponse = await response.json()
     sessionStorage.setItem("currentPoint", JSON.stringify(dataResponse))
+}
+
+async function deletePoint(){
+    const id = JSON.parse(sessionStorage.getItem("currentPoint")).id
+    const response = await fetch(`${apiPointUrl}/${id}`, {
+        method: "DELETE"
+    })
+    newPoint()
+}
+
+function newPoint(){
+    window.location.href = "http://localhost:3000"
 }
