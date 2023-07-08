@@ -9,6 +9,7 @@ const attention = document.querySelector('div#attention')
 const showChanges = document.querySelector('div#changes')
 const deleteBtn = document.querySelector('input#delete-btn')
 const newPointBtn = document.querySelector('input#new-point-btn')
+const explorerDiv = document.querySelector('div#explorer')
 
 saveBtn.addEventListener('click', save)
 changes.addEventListener('click', deleteMarker)
@@ -25,6 +26,10 @@ const googleMaps = new GoogleMaps(document.querySelector('div#map'));
     if(sessionStorage.getItem("currentPoint") != null){
         googleMaps.marker()
     }
+
+    const points =  await readAll()
+    getAllPoints(points)
+
 })()
 
 function deleteMarker(){
@@ -83,4 +88,23 @@ async function deletePoint(){
 
 function newPoint(){
     window.location.href = "http://localhost:3000"
+}
+
+function getAllPoints(points){
+    const newDiv = []
+
+    for (let i = 0; i<points.length; i++){
+        newDiv.push(document.createElement("div"))
+
+        newDiv[i].innerHTML = points[i].name
+        newDiv[i].classList.add('point-div')
+
+        explorerDiv.appendChild(newDiv[i])
+    }
+}
+
+async function readAll(){
+    const response = await fetch(apiPointUrl)
+
+    return await response.json()
 }
