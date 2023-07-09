@@ -70,14 +70,21 @@ export class GoogleMaps {
         return data.key
     }
 
-    async marker(){
+    async marker(currentPoint){
         const { AdvancedMarkerView } = await google.maps.importLibrary("marker")
+
+        const position = {
+            lat: parseFloat(currentPoint.lat),
+            lng: parseFloat(currentPoint.lng),
+            altitude: 0
+        }
         
         const nameInput = document.querySelector('input#name')
-        nameInput.value = JSON.parse(sessionStorage.getItem("currentPoint")).name
+        nameInput.value = currentPoint.name
+
         this.currentMarker = new AdvancedMarkerView({
             map: this.map,
-            position: JSON.parse(sessionStorage.getItem("position")),
+            position: position,
             title: nameInput.value
         })
     }

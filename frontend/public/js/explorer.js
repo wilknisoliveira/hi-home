@@ -12,7 +12,9 @@ const newPointBtn = document.querySelector('input#new-point-btn')
 const explorerDiv = document.querySelector('div#explorer')
 
 saveBtn.addEventListener('click', save)
-changes.addEventListener('click', deleteMarker)
+changes.addEventListener('click', function(){
+    deleteMarker(true)
+})
 nameInput.addEventListener('change', upAvailable)
 deleteBtn.addEventListener('click', deletePoint)
 newPointBtn.addEventListener('click', newPoint)
@@ -23,18 +25,18 @@ const googleMaps = new GoogleMaps(document.querySelector('div#map'));
 
 (async ()=>{
     await googleMaps.initWait()
-    if(sessionStorage.getItem("currentPoint") != null){
-        googleMaps.marker()
-    }
 
     const points =  await readAll()
-    getAllPoints(points)
-
+    if(points != null){
+        getAllPoints(points)
+        googleMaps.marker(points[points.length-1])
+    }
 })()
 
-function deleteMarker(){
+function deleteMarker(fromMap){
     googleMaps.deleteMarker()
-    updateAvailable = true
+    if(fromMap == true)
+        updateAvailable = true
 }
 
 function upAvailable(){
@@ -92,19 +94,36 @@ function newPoint(){
 
 function getAllPoints(points){
     const newDiv = []
-
-    for (let i = 0; i<points.length; i++){
+    for (let i = points.length-1, j = 0; i>0; i--, j++){
         newDiv.push(document.createElement("div"))
 
-        newDiv[i].innerHTML = points[i].name
-        newDiv[i].classList.add('point-div')
-
-        explorerDiv.appendChild(newDiv[i])
+        newDiv[j].innerHTML = points[i].name
+        newDiv[j].classList.add('point-div')
+        newDiv[j].addEventListener('click', function(){
+            selectPoint(points[i], newDiv[j])
+        })
+        explorerDiv.appendChild(newDiv[j])
     }
+    selectDiv(newDiv[0])
 }
 
 async function readAll(){
     const response = await fetch(apiPointUrl)
 
     return await response.json()
+}
+
+function selectPoint(point, newDiv){
+    googleMaps.marker(point)
+    selectDiv(newDiv)
+    deleteMarker(false)
+}
+
+function selectDiv(newDiv){
+    let childExplorerDiv = explorerDiv.querySelectorAll('div')
+
+    for(let i = 0; i< childExplorerDiv.length; i++){
+        childExplorerDiv[i].style.borderColor = "#58af9c"
+    }
+    newDiv.style.borderColor = "red"
 }
