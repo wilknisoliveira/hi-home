@@ -1,0 +1,91 @@
+body {
+    padding: 1% 3% 3% 3%;
+}
+
+header {
+    display: flex;
+    font-size:x-large;
+}
+
+div#hi-title {
+    color: #58af9c;
+}
+
+div#container {
+    height: 60%;
+}
+
+div#map {
+    height: 100%;
+    width: 64%;
+    border-radius: 0px 10px 10px 0px;
+}
+
+div#register {
+    height: 100%;
+    width: 30%;
+    border-radius:10px 0px 0px 10px;
+}
+
+div#register-content {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+div#changes {
+    display: None;
+    color: yellow;
+    justify-content: end;
+    font-weight: bolder;
+}
+
+div#down-buttons {
+    display: flex;
+}
+
+.down-buttons {
+    width: 100%;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+div#right-button {
+    display: flex;
+    justify-content: end;
+}
+
+
+input#delete-btn {
+    background-color: red;
+}
+
+div#explorer-container {
+    position: relative;
+    width: 94%;
+}
+
+div#gallery-wrapper {
+    overflow-x: auto;
+}
+
+div#explorer {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.point-div {
+    padding: 2%;
+    margin: 1%;
+    background-color: white;
+    border: 2px solid;
+    border-radius: 20px 20px 20px 20px;
+    border-color: #58af9c;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+

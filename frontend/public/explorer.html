@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorer</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script type="module" src="./js/explorer.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="./css/explorer.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/hihome.css" />
+</head>
+<body>
+    <header>
+        <div id="hi-title">Hi</div>
+        <div>-Home</div>
+    </header>
+
+    <main>
+        <div id="container" class="container">
+            <div id="register" class="register">
+                <div id="register-content">
+                    <div id="changes">!</div>
+                    <h2 id="update-title">Update</h2>
+
+                    <form>
+                        <label for="name">Name</label><br>
+                        <input type="text" id="name" name="name" class="input-form input-name" required><br>
+
+                        <input type="button" id="save-btn" class="standard-btn input-form" value="Save">
+                    </form>
+                </div>
+                <div id="attention" class="attention">
+                    Fill in the name field
+                </div>
+                <div id="down-buttons">
+                    <div id="lef-button" class="down-buttons">
+                        <input type="button" id="new-point-btn" class="standard-btn input-form" value="New Point">
+                    </div>
+                    <div id="right-button" class="down-buttons">
+                        <input type="button" id="delete-btn" class="standard-btn input-form" value="Delete">
+                    </div>
+                </div>
+            </div>
+            <div id="map">Map</div>
+        </div>
+        <div id="explorer-container">
+            <div id="gallery-wrapper">
+                <div id="explorer"></div>
+            </div>
+        </main>
+        </div>
+        
+    
+</body>
+</html>

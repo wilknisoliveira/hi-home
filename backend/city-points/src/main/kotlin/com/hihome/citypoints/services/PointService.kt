@@ -14,7 +14,7 @@ class PointService {
     private val logger = Logger.getLogger(PointService::class.java.name)
 
     fun save(point: Point): Point{
-        logger.info("Creating a new point with the following id: ${point.id}")
+        logger.info("Creating a new point...")
         return pointRepository.save(point)
     }
 

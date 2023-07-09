@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, main, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #ecf0f1;
+}
+
+h2 {
+    color: #58af9c;
+    font-weight: bolder;
+    font-size: x-large;
+    margin-bottom: 8%;
+}
+
+.standard-btn {
+    font-size: medium;
+    color: white;
+    font-weight: bold;
+    background-color: #58af9c;
+    border-width: 0;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.input-form {
+    margin-bottom: 5%;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 20px;
+}
+
+.register {
+    background-color: white;
+}
+
+.container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+
+    margin-top: 2%;
+}
+
+input#name {
+    padding-left: 8px;
+    width: 98%;
+    border-width: 1px;
+}
+
+.attention {
+    color: red;
+    display: None;
+    justify-content: center;
+}
