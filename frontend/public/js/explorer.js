@@ -11,32 +11,35 @@ const deleteBtn = document.querySelector('input#delete-btn')
 const newPointBtn = document.querySelector('input#new-point-btn')
 const explorerDiv = document.querySelector('div#explorer')
 
-saveBtn.addEventListener('click', save)
+saveBtn.addEventListener('click', function (){
+    save(currentPoint)
+})
 changes.addEventListener('click', function(){
     deleteMarker(true)
 })
 nameInput.addEventListener('change', upAvailable)
-deleteBtn.addEventListener('click', deletePoint)
+deleteBtn.addEventListener('click', function(){
+    deletePoint(currentPoint)
+})
 newPointBtn.addEventListener('click', newPoint)
 
 let updateAvailable = false
+let currentPoint
 
 const googleMaps = new GoogleMaps(document.querySelector('div#map'));
 
 (async ()=>{
     await googleMaps.initWait()
 
-    const points =  await readAll()
-    if(points != null){
-        getAllPoints(points)
-        googleMaps.marker(points[points.length-1])
-    }
+    updateExplorer()
 })()
 
 function deleteMarker(fromMap){
-    googleMaps.deleteMarker()
     if(fromMap == true)
         updateAvailable = true
+    else
+        googleMaps.deleteMarker()
+
 }
 
 function upAvailable(){
@@ -45,22 +48,20 @@ function upAvailable(){
     updateAvailable = true
 }
 
-function save(){
+function save(currentPoint){
     const name = nameInput.value
-    let lastMarker = JSON.parse(sessionStorage.getItem("position"))
     if(updateAvailable == true){
         if(name != ""){
             let point = {
-                id: JSON.parse(sessionStorage.getItem("currentPoint")).id,
+                id: currentPoint,
                 name: name,
-                lat: lastMarker.lat,
-                lng: lastMarker.lng
+                lat: googleMaps.currentMarker.position.h,
+                lng: googleMaps.currentMarker.position.j
             }
 
             update(point)
 
-            attention.style.display = "None"
-            showChanges.style.display = "None"
+            reloadExplorer()
         }else{
             attention.style.display = "flex"
         }
@@ -77,19 +78,22 @@ async function update(point){
         }
     })
     const dataResponse = await response.json()
-    sessionStorage.setItem("currentPoint", JSON.stringify(dataResponse))
 }
 
-async function deletePoint(){
-    const id = JSON.parse(sessionStorage.getItem("currentPoint")).id
-    const response = await fetch(`${apiPointUrl}/${id}`, {
+async function deletePoint(pointId){
+    const response = await fetch(`${apiPointUrl}/${pointId}`, {
         method: "DELETE"
     })
-    newPoint()
+    updateExplorer()
+    deleteMarker(false)
 }
 
 function newPoint(){
     window.location.href = "http://localhost:3000"
+}
+
+function reloadExplorer(){
+    window.location.href = "http://localhost:3000/explorer"
 }
 
 function getAllPoints(points){
@@ -108,8 +112,11 @@ function getAllPoints(points){
 }
 
 async function readAll(){
-    const response = await fetch(apiPointUrl)
-
+    const response = await fetch(`${apiPointUrl}?cache=${Date.now()}`, {
+        headers: {
+            'Cache-Control' : 'no-cache'
+        }
+    })
     return await response.json()
 }
 
@@ -117,6 +124,8 @@ function selectPoint(point, newDiv){
     googleMaps.marker(point)
     selectDiv(newDiv)
     deleteMarker(false)
+    currentPoint = point.id
+    showChanges.style.display = "None"
 }
 
 function selectDiv(newDiv){
@@ -126,4 +135,15 @@ function selectDiv(newDiv){
         childExplorerDiv[i].style.borderColor = "#58af9c"
     }
     newDiv.style.borderColor = "red"
+}
+
+async function updateExplorer(){
+    explorerDiv.innerHTML = ""
+    const points =  await readAll()
+    
+    if(points != null){
+        getAllPoints(points)
+        googleMaps.marker(points[points.length-1])
+        currentPoint = points[points.length-1].id
+    }
 }

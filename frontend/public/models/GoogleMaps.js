@@ -19,12 +19,23 @@ export class GoogleMaps {
     }
     
     async initMap(){
+        let geoPosition 
+        navigator.geolocation.getCurrentPosition(function(position){
+            geoPosition = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            }
+            console.log(geoPosition)
+        })
+
+    
+        const { Map } = await google.maps.importLibrary("maps")
+
+        console.log(geoPosition)
         const position = {
             lat: -25.344,
             lng: 131.031
         }
-    
-        const { Map } = await google.maps.importLibrary("maps")
 
         const map = new Map(this.mapDiv, {
             zoom: 4,
@@ -32,18 +43,18 @@ export class GoogleMaps {
             mapId: "DEMO_MAP_ID"
         })
     
-        map.addListener('click', async function(e){
+        map.addListener('click', async (e)=>{
             try {
                 const changes = document.querySelector('div#changes')
                 changes.style.display = "flex"
             }catch{}
 
             const clickPosition = e.latLng;
-
-            if(this.lastMarker != null){
-                this.lastMarker.setMap(null)
+            
+            if(this.currentMarker != null){
+                this.deleteMarker()
             }
-        
+            
             const { AdvancedMarkerView } = await google.maps.importLibrary("marker")
         
             const marker = new AdvancedMarkerView({
@@ -52,9 +63,7 @@ export class GoogleMaps {
                 title: (Math.random() * (1000-0) + 0).toString()
             })
         
-            this.lastMarker = marker
-
-            sessionStorage.setItem("position", JSON.stringify(marker.position))
+            this.currentMarker = marker
         })
 
         this.map = map
@@ -72,7 +81,6 @@ export class GoogleMaps {
 
     async marker(currentPoint){
         const { AdvancedMarkerView } = await google.maps.importLibrary("marker")
-
         const position = {
             lat: parseFloat(currentPoint.lat),
             lng: parseFloat(currentPoint.lng),

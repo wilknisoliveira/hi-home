@@ -6,30 +6,36 @@ const saveBtn = document.querySelector('input#save-btn')
 const nameInput = document.querySelector('input#name')
 const explorerBtn = document.querySelector('input#explorer-btn')
 const attention = document.querySelector('div#attention')
+const mapDiv = document.querySelector('div#map')
 
 saveBtn.addEventListener('click', save)
-explorerBtn.addEventListener('click', explorerPage);
+explorerBtn.addEventListener('click', explorerPage)
+mapDiv.addEventListener('click', mapMarked)
 
-sessionStorage.clear()
-
+let lastMarker = false
 const googleMaps = new GoogleMaps(document.querySelector('#map'))
 
 googleMaps.initWait()
 
+function mapMarked(){
+    lastMarker = true
+}
+
 async function save(){
-    let lastMarker = JSON.parse(sessionStorage.getItem("position"))
     let name = nameInput.value
 
-    if(name != "" && lastMarker != null){
+    
+    if(name != "" && lastMarker){
         let point = {
             name: name,
-            lat: lastMarker.lat,
-            lng: lastMarker.lng
+            lat: googleMaps.currentMarker.position.h,
+            lng: googleMaps.currentMarker.position.j
         }
         await create(point)
         explorerPage()
     }else
         attention.style.display = "flex"
+    
 }
 
 async function create(point){
@@ -41,7 +47,6 @@ async function create(point){
         }
     })
     const dataResponse = await response.json()
-    await sessionStorage.setItem("currentPoint", JSON.stringify(dataResponse))
 }
 
 function explorerPage(){
