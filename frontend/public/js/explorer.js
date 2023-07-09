@@ -25,6 +25,8 @@ newPointBtn.addEventListener('click', newPoint)
 
 let updateAvailable = false
 let currentPoint
+let currentDiv
+let currentPointArrayPosition
 
 const googleMaps = new GoogleMaps(document.querySelector('div#map'));
 
@@ -60,7 +62,8 @@ function save(currentPoint){
             }
 
             update(point)
-
+            sessionStorage.setItem("currentDiv", currentDiv)
+            sessionStorage.setItem("currentPointArrayPosition", currentPointArrayPosition)
             reloadExplorer()
         }else{
             attention.style.display = "flex"
@@ -98,13 +101,15 @@ function reloadExplorer(){
 
 function getAllPoints(points){
     const newDiv = []
-    for (let i = points.length-1, j = 0; i>0; i--, j++){
+    for (let i = points.length, j = 0; i>0; i--, j++){
         newDiv.push(document.createElement("div"))
 
-        newDiv[j].innerHTML = points[i].name
+        newDiv[j].innerHTML = points[i-1].name
         newDiv[j].classList.add('point-div')
         newDiv[j].addEventListener('click', function(){
-            selectPoint(points[i], newDiv[j])
+            currentDiv = j
+            currentPointArrayPosition = i-1
+            selectPoint(points[i-1], newDiv[j])
         })
         explorerDiv.appendChild(newDiv[j])
     }
@@ -140,10 +145,32 @@ function selectDiv(newDiv){
 async function updateExplorer(){
     explorerDiv.innerHTML = ""
     const points =  await readAll()
+
+    let curDiv 
+    let curPAP
+    try{
+        curDiv = sessionStorage.getItem("currentDiv")
+        curPAP = sessionStorage.getItem("currentPointArrayPosition")
+    }catch{}
     
-    if(points != null){
-        getAllPoints(points)
-        googleMaps.marker(points[points.length-1])
-        currentPoint = points[points.length-1].id
+    getAllPoints(points)
+    if(curDiv != null){ 
+        googleMaps.marker(points[curPAP])
+        currentPoint = points[curPAP].id
+        
+        let childExplorerDiv = explorerDiv.querySelectorAll('div')
+
+        for(let i = 0; i< childExplorerDiv.length; i++){
+            childExplorerDiv[i].style.borderColor = "#58af9c"
+        }
+        childExplorerDiv[curDiv].style.borderColor = "red"
+        sessionStorage.clear()
+    }else{
+        if(points.length > 0){
+            googleMaps.marker(points[points.length-1])
+            currentPoint = points[points.length-1].id
+        }
     }
+
+    
 }
