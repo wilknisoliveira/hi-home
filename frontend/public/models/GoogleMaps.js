@@ -19,26 +19,15 @@ export class GoogleMaps {
     }
     
     async initMap(){
-        let geoPosition 
-        navigator.geolocation.getCurrentPosition(function(position){
-            geoPosition = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            }
-            console.log(geoPosition)
-        })
-
-    
         const { Map } = await google.maps.importLibrary("maps")
 
-        console.log(geoPosition)
         const position = {
-            lat: -25.344,
-            lng: 131.031
+            lat: -4.7484073,
+            lng: -37.9676686
         }
 
         const map = new Map(this.mapDiv, {
-            zoom: 4,
+            zoom: 16,
             center: position,
             mapId: "DEMO_MAP_ID"
         })
@@ -65,6 +54,8 @@ export class GoogleMaps {
         
             this.currentMarker = marker
         })
+
+        this.geoPosition()
 
         this.map = map
     }
@@ -95,9 +86,23 @@ export class GoogleMaps {
             position: position,
             title: nameInput.value
         })
+
+        this.map.setCenter(position)
     }
 
     deleteMarker(){
         this.currentMarker.setMap(null)
+    }
+
+    geoPosition(){
+        let geoPosition 
+
+        navigator.geolocation.getCurrentPosition((position)=>{
+            geoPosition = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            }
+            this.map.setCenter(geoPosition)
+        })
     }
 }
