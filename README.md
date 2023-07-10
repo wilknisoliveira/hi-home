@@ -1,5 +1,7 @@
 # Hi-home
-![Hi-Home](./assets/Logo.png)
+![Logo](https://github.com/wilknisoliveira/wilknisoliveira/assets/135706241/f019d1c3-e4c3-46ee-be27-3a885dda1349)
+
+> Status: Developing ⚠️
 
 A Kotlin-Spring API to save locations in a MySQL DB. Also, a simple interface in Javascript/Node/Express using the Google Maps API to interact with the backend.
 
@@ -32,8 +34,8 @@ The long term goal would be create a platform tha
 INSERT THE DIAGRAM AND SWAGGER?
 
 ### Frontend
-![register-page](./assets/Register.png)
-![explorer-page](./assets/Explorer.png)
+![Register](https://github.com/wilknisoliveira/wilknisoliveira/assets/135706241/332f103d-5234-4427-9e1b-9cae62b2bb56)
+![Explorer](https://github.com/wilknisoliveira/wilknisoliveira/assets/135706241/f8bf8852-74a1-422e-9fad-c7c178ad027a)
 
 ## How to install this project?
 ### Stack
