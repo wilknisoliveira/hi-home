@@ -5,7 +5,7 @@
 
 A Kotlin-Spring API to save locations in a MySQL DB. Also, a simple interface in Javascript/Node/Express using the Google Maps API to interact with the backend.
 
-The long term goal would be create a platform tha
+Do you want to know more about the the project goals? Go to 'Next steps' section. 
 
 ## Index
 - <a href="#features">Project features</a>
@@ -14,8 +14,9 @@ The long term goal would be create a platform tha
 - <a href="#run">Run</a>
 - <a href="#stack">Stack</a>
 - <a href="#steps">Next steps</a>
+- <a href="#author">Author steps</a>
 
-## Project features
+## ✔️ Project features
 ### API
 - [x] CRUD operations
 - [x] HATEOAS level
@@ -29,7 +30,7 @@ The long term goal would be create a platform tha
 - [x] Explorer page to use CRUD Operations
 - [x] Interaction with Google Maps API
 
-## Layout
+## 💻 Layout
 ### API
 INSERT THE DIAGRAM AND SWAGGER?
 
@@ -37,7 +38,7 @@ INSERT THE DIAGRAM AND SWAGGER?
 ![Register](https://github.com/wilknisoliveira/wilknisoliveira/assets/135706241/332f103d-5234-4427-9e1b-9cae62b2bb56)
 ![Explorer](https://github.com/wilknisoliveira/wilknisoliveira/assets/135706241/f8bf8852-74a1-422e-9fad-c7c178ad027a)
 
-## How to install this project?
+## 🔨 How to install this project?
 ### Stack
 First of all, make sure that you have the following technologies in your environment:
 - Java 17
@@ -73,7 +74,7 @@ $ cd frontend
 $ npm install
 ```
 
-## How to run this project?
+## ⚙️ How to run this project?
 - Open a terminal:
 ```bash
 cd frontend/src
@@ -84,7 +85,7 @@ node server.js
 1. Start the frontend at http://localhost:3000/;
 2. See the Swagger documentation of the City Point API from http://localhost:8080/swagger-ui/index.html.
 
-## Stack
+## 🧰 Stack
 ![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white)
 ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
@@ -95,7 +96,7 @@ node server.js
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-## Next Steps
+## 👨‍💻 Next Steps
 The long term goal would be to create a platform to help the user to know any city better! Imagine that you are in a new city and you want to know what is fun there. The Hi-Home could help you! You could search for attractions, stores, services, concerts, social events and much more!
 
 - [ ] Suporte to images
@@ -110,3 +111,8 @@ The long term goal would be to create a platform to help the user to know any ci
 - [ ] Filter by city
 - [ ] Docker
 - [ ] Deploy
+
+ ## Author
+ Wilknis Deyvis
+
+ [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wilknis/)
