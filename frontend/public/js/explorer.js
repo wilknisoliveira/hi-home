@@ -1,6 +1,10 @@
 import {GoogleMaps} from "../models/GoogleMaps.js"
 
 const apiPointUrl = 'http://localhost:8080/points'
+let updateAvailable = false
+let currentPoint
+let currentDiv
+let currentPointArrayPosition
 
 const saveBtn = document.querySelector('input#save-btn')
 const changes = document.querySelector('div#map')
@@ -17,16 +21,11 @@ saveBtn.addEventListener('click', function (){
 changes.addEventListener('click', function(){
     deleteMarker(true)
 })
-nameInput.addEventListener('change', upAvailable)
 deleteBtn.addEventListener('click', function(){
     deletePoint(currentPoint)
 })
 newPointBtn.addEventListener('click', newPoint)
-
-let updateAvailable = false
-let currentPoint
-let currentDiv
-let currentPointArrayPosition
+nameInput.addEventListener('change', upAvailable)
 
 const googleMaps = new GoogleMaps(document.querySelector('div#map'));
 
@@ -36,67 +35,42 @@ const googleMaps = new GoogleMaps(document.querySelector('div#map'));
     updateExplorer()
 })()
 
-function deleteMarker(fromMap){
-    if(fromMap == true)
-        updateAvailable = true
-    else
-        googleMaps.deleteMarker()
+async function updateExplorer(){
+    explorerDiv.innerHTML = ""
+    const points =  await readAll()
 
-}
-
-function upAvailable(){
+    //This part is used when the update came from a reload of the page by the save button.
+    //The code get the last div selected to give a feeling of continuing to the user
+    let curDiv 
+    let curPAP
+    try{
+        curDiv = sessionStorage.getItem("currentDiv")
+        curPAP = sessionStorage.getItem("currentPointArrayPosition")
+    }catch{}
     
-    showChanges.style.display = "flex"
-    updateAvailable = true
-}
+    getAllPoints(points)
+    if(curDiv != null){ 
+        googleMaps.marker(points[curPAP])
+        currentPoint = points[curPAP].id
+        
+        selectDiv(curDiv)
 
-function save(currentPoint){
-    const name = nameInput.value
-    if(updateAvailable == true){
-        if(name != ""){
-            let point = {
-                id: currentPoint,
-                name: name,
-                lat: googleMaps.currentMarker.position.h,
-                lng: googleMaps.currentMarker.position.j
-            }
-
-            update(point)
-            sessionStorage.setItem("currentDiv", currentDiv)
-            sessionStorage.setItem("currentPointArrayPosition", currentPointArrayPosition)
-            reloadExplorer()
-        }else{
-            attention.style.display = "flex"
+        sessionStorage.clear()
+    }else{
+        if(points.length > 0){
+            googleMaps.marker(points[points.length-1])
+            currentPoint = points[points.length-1].id
         }
-
-    }
+    }  
 }
 
-async function update(point){
-    const response = await fetch(apiPointUrl, {
-        method: "PUT",
-        body: JSON.stringify(point),
+async function readAll(){
+    const response = await fetch(`${apiPointUrl}?cache=${Date.now()}`, {
         headers: {
-            "Content-type" : "application/json"
+            'Cache-Control' : 'no-cache'
         }
     })
-    const dataResponse = await response.json()
-}
-
-async function deletePoint(pointId){
-    const response = await fetch(`${apiPointUrl}/${pointId}`, {
-        method: "DELETE"
-    })
-    updateExplorer()
-    deleteMarker(false)
-}
-
-function newPoint(){
-    window.location.href = "http://localhost:3000"
-}
-
-function reloadExplorer(){
-    window.location.href = "http://localhost:3000/explorer"
+    return await response.json()
 }
 
 function getAllPoints(points){
@@ -114,15 +88,8 @@ function getAllPoints(points){
         explorerDiv.appendChild(newDiv[j])
     }
     selectDiv(newDiv[0])
-}
-
-async function readAll(){
-    const response = await fetch(`${apiPointUrl}?cache=${Date.now()}`, {
-        headers: {
-            'Cache-Control' : 'no-cache'
-        }
-    })
-    return await response.json()
+    currentDiv = 0
+    currentPointArrayPosition = points.length-1
 }
 
 function selectPoint(point, newDiv){
@@ -139,38 +106,77 @@ function selectDiv(newDiv){
     for(let i = 0; i< childExplorerDiv.length; i++){
         childExplorerDiv[i].style.borderColor = "#58af9c"
     }
-    newDiv.style.borderColor = "red"
+
+    //This replace overload of the OOP
+    if(!isNaN(newDiv))
+        childExplorerDiv[newDiv].style.borderColor = "red"
+    else
+        newDiv.style.borderColor = "red"
 }
 
-async function updateExplorer(){
-    explorerDiv.innerHTML = ""
-    const points =  await readAll()
+function deleteMarker(fromMap){
+    if(fromMap == true)
+        updateAvailable = true
+    else
+        googleMaps.deleteMarker()
+}
 
-    let curDiv 
-    let curPAP
-    try{
-        curDiv = sessionStorage.getItem("currentDiv")
-        curPAP = sessionStorage.getItem("currentPointArrayPosition")
-    }catch{}
-    
-    getAllPoints(points)
-    if(curDiv != null){ 
-        googleMaps.marker(points[curPAP])
-        currentPoint = points[curPAP].id
-        
-        let childExplorerDiv = explorerDiv.querySelectorAll('div')
+function save(currentPoint){
+    const name = nameInput.value
+    if(updateAvailable == true){
+        if(name != ""){
+            let point = {
+                id: currentPoint,
+                name: name,
+                lat: googleMaps.currentMarker.position.h,
+                lng: googleMaps.currentMarker.position.j
+            }
 
-        for(let i = 0; i< childExplorerDiv.length; i++){
-            childExplorerDiv[i].style.borderColor = "#58af9c"
-        }
-        childExplorerDiv[curDiv].style.borderColor = "red"
-        sessionStorage.clear()
-    }else{
-        if(points.length > 0){
-            googleMaps.marker(points[points.length-1])
-            currentPoint = points[points.length-1].id
+            update(point)
+
+            //Notice that the page is reloaded to avoid a caching problem.
+            //If we just update the explorer div, the next GET request came with cache data.
+            //So we set the information of the selected point to the get when the page reload 
+            sessionStorage.setItem("currentDiv", currentDiv)
+            sessionStorage.setItem("currentPointArrayPosition", currentPointArrayPosition)
+            reloadExplorer()
+        }else{
+            attention.style.display = "flex"
         }
     }
-
-    
 }
+
+async function update(point){
+    const response = await fetch(apiPointUrl, {
+        method: "PUT",
+        body: JSON.stringify(point),
+        headers: {
+            "Content-type" : "application/json"
+        }
+    })
+    const dataResponse = await response.json()
+}
+
+function reloadExplorer(){
+    window.location.href = "http://localhost:3000/explorer"
+}
+
+async function deletePoint(pointId){
+    const response = await fetch(`${apiPointUrl}/${pointId}`, {
+        method: "DELETE"
+    })
+    updateExplorer()
+    deleteMarker(false)
+}
+
+function newPoint(){
+    sessionStorage.clear()
+    window.location.href = "http://localhost:3000"
+}
+
+function upAvailable(){
+    showChanges.style.display = "flex"
+    updateAvailable = true
+}
+
+

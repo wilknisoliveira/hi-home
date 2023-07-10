@@ -6,6 +6,7 @@ export class GoogleMaps {
         this.lastMk
     }
 
+    //Initialize the map with this function
     async initWait(){              
         const googleKey = await this.getGoogleKey();
     
@@ -33,6 +34,10 @@ export class GoogleMaps {
         })
     
         map.addListener('click', async (e)=>{
+            //The try{} is used to show a message of changes to user
+            //The HTML can have a div with id 'changes'. 
+            //Set the css with 'display: None' and when any change happen in the map,
+            //this div will show to the user. 
             try {
                 const changes = document.querySelector('div#changes')
                 changes.style.display = "flex"
@@ -60,6 +65,7 @@ export class GoogleMaps {
         this.map = map
     }
     
+    //Get the api key from dotenv
     async getGoogleKey(){
         const url = 'http://localhost:3000/googlekey'
     
@@ -90,6 +96,7 @@ export class GoogleMaps {
         this.map.setCenter(position)
     }
 
+    //This delete the last marker in the map
     deleteMarker(){
         this.currentMarker.setMap(null)
     }

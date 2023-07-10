@@ -15,6 +15,7 @@ app.get('/explorer', (req, res)=>{
     res.sendFile(path.join(path.join(__dirname, '../public', 'explorer.html')))
 })
 
+//Route to pass the google api key from dotenv
 app.get('/googlekey', (req, res)=>{
     const key = {"key": process.env.GOOGLE_API_KEY}
     
