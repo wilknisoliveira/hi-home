@@ -1,6 +1,7 @@
 import { GoogleMaps } from "../models/GoogleMaps.js"
 
 const apiPointUrl = 'http://localhost:8080/points'
+let lastMarker = false
 
 const saveBtn = document.querySelector('input#save-btn')
 const nameInput = document.querySelector('input#name')
@@ -12,11 +13,11 @@ saveBtn.addEventListener('click', save)
 explorerBtn.addEventListener('click', explorerPage)
 mapDiv.addEventListener('click', mapMarked)
 
-let lastMarker = false
 const googleMaps = new GoogleMaps(document.querySelector('#map'))
 
 googleMaps.initWait()
 
+//Set the save button available when the map is clicked
 function mapMarked(){
     lastMarker = true
 }
@@ -24,7 +25,6 @@ function mapMarked(){
 async function save(){
     let name = nameInput.value
 
-    
     if(name != "" && lastMarker){
         let point = {
             name: name,
