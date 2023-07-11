@@ -44,10 +44,10 @@ Do you want to know more about the the project goals? Go to 'Next steps' section
 <img style="width:500px" src="https://github.com/wilknisoliveira/hi-home/assets/135706241/01b3b973-6161-4ec7-94fc-da6a7e5aa8b9" alt="DML diagram">
 
 ### API
-![Swagger](./readme_assets/Swagger.gif)
+![Swagger](./readme_assets/swagger.gif)
 
 ### Frontend
-![Frontend](./readme_assets/Frontend.gif)
+![Frontend](./readme_assets/frontend.gif)
 
 ## 🔨 How to install this project?
 ### Stack

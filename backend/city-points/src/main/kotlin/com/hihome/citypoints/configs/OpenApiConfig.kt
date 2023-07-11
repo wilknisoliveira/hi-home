@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.servers.Server
             email = "wilknisoliveira@gmail.com"
         ),
         description = "OpenApi documentation for City Points project",
-        title = "OpenApi spacification - Wilknis",
+        title = "OpenApi - City Points",
         version = "1.0"
     ),
     servers = [
