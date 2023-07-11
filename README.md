@@ -7,13 +7,22 @@ A Kotlin-Spring API to save locations in a MySQL DB. Also, a simple interface in
 
 Do you want to know more about the the project goals? Go to 'Next steps' section. 
 
+![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![Google-Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
+![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+
 ## Index
-- <a href="#features">Project features</a>
-- <a href="#layout">Layout</a>
-- <a href="#install">Install</a>
-- <a href="#run">Run</a>
-- <a href="#stack">Stack</a>
-- <a href="#steps">Next steps</a>
+- <a href="#✔️-project-features">Project features</a>
+- <a href="#💻-layout">Layout</a>
+- <a href="#🔨-how-to-install-this-project">Install</a>
+- <a href="#⚙️-how-to-run-this-project">Run</a>
+- <a href="#👨‍💻-next-steps">Next steps</a>
 - <a href="#author">Author steps</a>
 
 ## ✔️ Project features
@@ -31,12 +40,14 @@ Do you want to know more about the the project goals? Go to 'Next steps' section
 - [x] Interaction with Google Maps API
 
 ## 💻 Layout
+### General
+<img style="width:500px" src="https://github.com/wilknisoliveira/hi-home/assets/135706241/01b3b973-6161-4ec7-94fc-da6a7e5aa8b9" alt="DML diagram">
+
 ### API
-INSERT THE DIAGRAM AND SWAGGER?
+![Swagger](./readme_assets/Swagger.gif)
 
 ### Frontend
-![Register](https://github.com/wilknisoliveira/wilknisoliveira/assets/135706241/332f103d-5234-4427-9e1b-9cae62b2bb56)
-![Explorer](https://github.com/wilknisoliveira/wilknisoliveira/assets/135706241/f8bf8852-74a1-422e-9fad-c7c178ad027a)
+![Frontend](./readme_assets/Frontend.gif)
 
 ## 🔨 How to install this project?
 ### Stack
@@ -84,17 +95,6 @@ node server.js
 - Now you can:
 1. Start the frontend at http://localhost:3000/;
 2. See the Swagger documentation of the City Point API from http://localhost:8080/swagger-ui/index.html.
-
-## 🧰 Stack
-![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white)
-![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
-![Google-Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
-![Javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
-![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
 ## 👨‍💻 Next Steps
 The long term goal would be to create a platform to help the user to know any city better! Imagine that you are in a new city and you want to know what is fun there. The Hi-Home could help you! You could search for attractions, stores, services, concerts, social events and much more!
